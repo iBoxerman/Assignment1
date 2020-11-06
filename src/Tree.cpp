@@ -21,7 +21,6 @@ Tree::Tree(int rootLabel):node(rootLabel),children() {
 // this function add a child to the tree
 void Tree::addChild(const Tree &child) {
     if (child!= nullptr){
-
     }
 }
 
