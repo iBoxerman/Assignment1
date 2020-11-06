@@ -12,6 +12,12 @@ Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix),infectedNodes()
 }
 
 // destructor
+virtual Graph::~Graph() {
+    if (edges & infectedNodes){
+        delete [edges];
+        delete [infectedNodes];
+    }
+}
 
 // copy constructor
 
@@ -21,12 +27,15 @@ Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix),infectedNodes()
 
 // move assignment operator
 
+// return the nodes number by checking the vector size
 const int Graph::getSize() const {
     return edges.size();
 }
+
 bool Graph::areNeighbors(int i, int j) {
     return (edges.at(i).at(j)==1);
 }
+
 // this function infects a node
 void Graph::infectNode(int nodeInd) {
     if (!isInfected(nodeInd)){

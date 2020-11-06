@@ -33,17 +33,15 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
     Tree curr_tree = new Tree(rootLabel);
     Graph graph = session.getGraph(); // copy assignment of graph
 
-    /*
-    for (int i = 0; i<graph.getSize(); i++){
-        if graph.areNeighbors(rootLabel,i){
-
-        }
-    */
     if (session.getTreeType()==Cycle){
 
     }
     else if (session.getTreeType()==MaxRank){
-
+        for (int i = 0; i<graph.getSize(); i++){
+            if graph.areNeighbors(rootLabel,i){
+                children.push_back(Tree(i))
+            }
+        }
     }
     else{
 

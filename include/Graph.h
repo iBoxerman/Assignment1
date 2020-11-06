@@ -7,6 +7,7 @@
 class Graph{
 public:
     Graph(std::vector<std::vector<int>> matrix);
+    virtual ~Graph();
 
     const getSize() const;
     bool areNeighbors(int i, int j);

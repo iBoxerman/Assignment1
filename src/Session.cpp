@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "../include/Session.h"
+#include "../include/Agent.h"
 
 // empty test constructor
 Session::Session() : g(), treeType(), agents(){
@@ -34,14 +35,16 @@ void Session::simulate() {
 
 // this function adds an agent
 void Session::addAgent(const Agent &agent) {
-
+    Agent* cloned = agent.clone(); // making a copy of the agent
+    agents.push_back(cloned); // inserting the agents to the 2d vector
+    // possible to write addAgent(Virus(number))
 }
 
 void Session::setGraph(const Graph &graph) {
     g = graph;
 }
 
-const Graph& Session::getGraph() const {
+ Graph& Session::getGraph()  {
     return &g;
 }
 
