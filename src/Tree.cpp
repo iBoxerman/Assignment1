@@ -21,7 +21,7 @@ Tree::Tree(int rootLabel):node(rootLabel),children() {
 // this function add a child to the tree
 void Tree::addChild(const Tree &child) {
     if (child!= nullptr){
-        children.
+
     }
 }
 
@@ -34,7 +34,7 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
     Graph graph = session.getGraph(); // copy assignment of graph
     for (int i = 0; i<graph.getSize(); i++){
         if graph.areNeighbors(rootLabel,i){
-            this.addchild()
+        //    this.addchild()
         }
     }
     return nullptr;
