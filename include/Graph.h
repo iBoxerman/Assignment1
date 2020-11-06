@@ -9,6 +9,7 @@ public:
     Graph(std::vector<std::vector<int>> matrix);
 
     const getSize() const;
+    bool areNeighbors(int i, int j);
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
 private:

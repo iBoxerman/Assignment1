@@ -1,5 +1,6 @@
 #include "../include/Tree.h"
 #include "../include/Session.h"
+#include "../include/Graph.h"
 
 // simple constructor
 Tree::Tree(int rootLabel):node(),children() {
@@ -28,8 +29,8 @@ const Tree& Tree::getChild(int) const {
 // ??????????????????
 Tree *Tree::createTree(const Session &session, int rootLabel) {
     Graph graph = session.getGraph(); // copy assignment of graph
-    for (int i = 0; i<graph.){
-
+    for (int i = 0; i<graph.getSize(); i++){
+        if
     }
     return nullptr;
 

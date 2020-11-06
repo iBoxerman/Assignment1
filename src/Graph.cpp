@@ -1,4 +1,5 @@
 #include "../include/Graph.h"
+#include <vector>
 
 // simple constructor
 Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix),infectedNodes(){
@@ -23,7 +24,9 @@ Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix),infectedNodes()
 const int Graph::getSize() const {
     return edges.size();
 }
-
+bool Graph::areNeighbors(int i, int j) {
+    return (edges.at(i).at(j)==1);
+}
 // this function infects a node
 void Graph::infectNode(int nodeInd) {
     if (!isInfected(nodeInd)){
