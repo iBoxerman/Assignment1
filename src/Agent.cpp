@@ -4,8 +4,9 @@
 // simple constructor
 Agent::Agent(Session& _session):session(_session){}
 
-// destructor
-
+// destructor not maneging resources
+virtual Agent::~Agent(){
+}
 // copy constructor
 
 // copy assignment operatorSS

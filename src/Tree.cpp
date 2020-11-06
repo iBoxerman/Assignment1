@@ -1,6 +1,5 @@
 #include "../include/Tree.h"
 
-// this is a test
 
 // simple constructor
 Tree::Tree(int rootLabel):node(),children() {

@@ -2,7 +2,8 @@
 
 // simple constructor
 Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix),infectedNodes(){
-    // initialize
+    // using copy constructor to make edges (not move)
+    // initialize the infected nodes vector
     int vSize = edges.size();
     for(int i=0; i<vSize;i++){
         infectedNodes.at(i)=false;
@@ -24,6 +25,7 @@ void Graph::infectNode(int nodeInd) {
     if (!isInfected(nodeInd)){
         infectedNodes.at(nodeInd)=true;
     }
+    // push at session?
 }
 
 // this function checks if the given node is infected

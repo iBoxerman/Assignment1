@@ -1,18 +1,19 @@
+#include <fstream>
+#include <iostream>
 #include "../include/Session.h"
 
 // empty test constructor
-Session::Session() : g({{0,1,1,0,1},
-                        {1,0,0,1,0},
-                        {1,0,0,0,1},
-                        {0,1,0,0,0},
-                        {1,0,1,0,0}}), treeType(MaxRank), agents(){
-    addAgent({"V",0}); // what is an agent?
-    addAgent({"C",-1});
+Session::Session() : g(), treeType(), agents(){
 }
 
 // simple constructor
 Session::Session(const std::string &path) {
-
+    std::ifstream reader(path);
+    json jObject;
+    reader>>jObject;
+    g = jObject["Graph"];
+    std::string sTreeType = jObject["tree"];
+    // need to add agents!!
 }
 
 // destructor
@@ -37,6 +38,10 @@ void Session::addAgent(const Agent &agent) {
 
 void Session::setGraph(const Graph &graph) {
     g = graph;
+}
+
+const Graph& Session::getGraph() {
+    return &g;
 }
 
 void Session::enqueueInfected(int) {
