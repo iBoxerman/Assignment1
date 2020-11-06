@@ -5,8 +5,7 @@
 #include <vector>
 
 // simple constructor
-Tree::Tree(int rootLabel):node(),children() {
-    for (int i=0;)
+Tree::Tree(int rootLabel):node(rootLabel),children() {
 }
 
 // destructor
@@ -22,7 +21,7 @@ Tree::Tree(int rootLabel):node(),children() {
 // this function add a child to the tree
 void Tree::addChild(const Tree &child) {
     if (child!= nullptr){
-        children
+        children.
     }
 }
 
