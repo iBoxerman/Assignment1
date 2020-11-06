@@ -28,14 +28,27 @@ const Tree& Tree::getChild(int) const {
 
 }
 
-// ??????????????????
+// used to make trees
 Tree *Tree::createTree(const Session &session, int rootLabel) {
+    Tree curr_tree = new Tree(rootLabel);
     Graph graph = session.getGraph(); // copy assignment of graph
+
+    /*
     for (int i = 0; i<graph.getSize(); i++){
         if graph.areNeighbors(rootLabel,i){
-        //    this.addchild()
+
         }
+    */
+    if (session.getTreeType()==Cycle){
+
     }
+    else if (session.getTreeType()==MaxRank){
+
+    }
+    else{
+
+    }
+
     return nullptr;
 
 }
