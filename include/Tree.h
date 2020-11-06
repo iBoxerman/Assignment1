@@ -9,11 +9,13 @@ class Tree{
 public:
     Tree(int rootLabel);
     void addChild(const Tree& child);
-
+    const Tree& getChild(int) const;
 
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
-private:
+    void BFS();
+
+protected:
     int node;
     std::vector<Tree*> children;
 };

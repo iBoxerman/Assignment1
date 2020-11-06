@@ -15,6 +15,10 @@ virtual Agent::~Agent(){
 
 // move assignment operator
 
+// clone
+virtual Agent* Agent::clone(){
+
+}
 // Virus simple constructor
 Virus::Virus(int _nodeInd, Session& _session):nodeInd(_nodeInd),Agent(_session){}
 

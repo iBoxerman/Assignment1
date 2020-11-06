@@ -3,7 +3,7 @@
 
 // simple constructor
 Tree::Tree(int rootLabel):node(),children() {
-
+    for (int i=0;)
 }
 
 // destructor
@@ -21,9 +21,22 @@ void Tree::addChild(const Tree &child) {
 
 }
 
+const Tree& Tree::getChild(int) const {
+
+}
+
 // ??????????????????
 Tree *Tree::createTree(const Session &session, int rootLabel) {
+    session.
+    for (int i = 0; i){
+
+    }
     return nullptr;
+
+}
+
+void Tree::BFS() {
+    Tree* curr_tree = createTree(session, node);
 }
 
 // CycleTree simple constructor

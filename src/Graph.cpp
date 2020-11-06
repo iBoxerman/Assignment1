@@ -20,6 +20,9 @@ Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix),infectedNodes()
 
 // move assignment operator
 
+
+
+}
 // this function infects a node
 void Graph::infectNode(int nodeInd) {
     if (!isInfected(nodeInd)){

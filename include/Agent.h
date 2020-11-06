@@ -9,8 +9,10 @@ public:
     Agent(Session& session);
     virtual ~Agent();
 
+    virtual Agent* clone()=0;
     virtual void act()=0;
-private:
+
+protected:
     Session& session;
 };
 

@@ -40,8 +40,8 @@ void Session::setGraph(const Graph &graph) {
     g = graph;
 }
 
-const Graph& Session::getGraph() {
-    return &g;
+const Graph Session::getGraph() const {
+    return g;
 }
 
 void Session::enqueueInfected(int) {
