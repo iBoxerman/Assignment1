@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <vector>
 #include "../include/Session.h"
 
 // empty test constructor

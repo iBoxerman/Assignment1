@@ -1,7 +1,7 @@
 #ifndef SESSION_H_
 #define SESSION_H_
 
-#include <vector>
+#include <iostream>
 #include <string>
 #include "Graph.h"
 

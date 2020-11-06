@@ -1,6 +1,6 @@
 #ifndef TREE_H_
 #define TREE_H_
-
+#include <iostream>
 #include <vector>
 
 class Session;
@@ -8,14 +8,14 @@ class Session;
 class Tree{
 public:
     Tree(int rootLabel);
+
     void addChild(const Tree& child);
     const Tree& getChild(int) const;
-
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
     void BFS();
 
-protected:
+private:
     int node;
     std::vector<Tree*> children;
 };
