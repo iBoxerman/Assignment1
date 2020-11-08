@@ -18,21 +18,22 @@ protected:
     Session& session;
 };
 
-class ContactTracer: public Agent{
-public:
-    ContactTracer(Session& session);
-
-    virtual void act();
-};
-
-
 class Virus: public Agent{
 public:
     Virus(int nodeInd, Session& session);
 
     virtual void act();
+    virtual Agent * clone();
 private:
     const int nodeInd;
+};
+
+class ContactTracer: public Agent{
+public:
+    ContactTracer(Session& session);
+
+    virtual void act();
+    virtual Agent * clone();
 };
 
 #endif

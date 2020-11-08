@@ -6,15 +6,14 @@ Agent::Agent(Session& _session):session(_session){}
 
 // destructor not maneging resources
 Agent::~Agent(){
-    session = nullptr; // because we don't want the session to be deleted only the pointer
+    // because we don't want the session to be deleted only the pointer
 }
 
 // copy constructor
  Agent::Agent(const Agent &other):session(other.session) {
-    // it is not the exactly the definition of copy constructor but it will do the work
 }
 
-// copy assignment operatorSS
+// copy assignment operator
 const Agent& Agent::operator=(const Agent &other) {
     session = other.session; // is this currently?
     return *this;
@@ -23,12 +22,6 @@ const Agent& Agent::operator=(const Agent &other) {
 // move constructor
 
 // move assignment operator
-
-// clone
-Agent* Agent::clone(){
-    Agent cloned = this;
-    return *cloned; // is this right?
-}
 
 // Virus simple constructor
 Virus::Virus(int _nodeInd, Session& _session):nodeInd(_nodeInd),Agent(_session){}
@@ -51,6 +44,11 @@ void Virus::act() {
         this->session.dequeueInfected(nodeInd);
 }
 
+// Virus clone
+Agent *Virus::clone() {
+    Virus* cloned = new Virus(*this); // can be auto (recommended by Clion)
+    return cloned;
+}
 
 // ContactTracer constructor overwrite
 ContactTracer::ContactTracer(Session &session) : Agent(session) {}
@@ -59,5 +57,11 @@ ContactTracer::ContactTracer(Session &session) : Agent(session) {}
 void ContactTracer::act() {
     // make a tree
     // remove edges according to tree type
+}
+
+// ContactTracer clone
+Agent *ContactTracer::clone() {
+    ContactTracer* cloned = new ContactTracer(*this); // can be auto (recommended by Clion)
+    return cloned;
 }
 
