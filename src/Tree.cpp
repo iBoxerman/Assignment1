@@ -37,13 +37,14 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
  /*   _session = session;
     Tree curr_tree = new Tree(rootLabel);
     Graph graph = session; // copy assignment of graph
-*/
+
+
     if (session.getTreeType()==Cycle){
 
     }
     else if (session.getTreeType()==MaxRank){
         for (int i = 0; i<graph.getSize(); i++){
-            if graph.areNeighbors(rootLabel,i){
+            if (graph.areNeighbors(rootLabel,i)){
                 children.push_back(Tree(i))
             }
         }
@@ -55,7 +56,7 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
 
     }
 
-    return nullptr;
+    return nullptr;*/
 
 }
 
