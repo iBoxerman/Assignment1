@@ -5,7 +5,7 @@
 Agent::Agent(Session& _session):session(_session){}
 
 // destructor not maneging resources
-virtual Agent::~Agent(){
+Agent::~Agent(){
     session = nullptr; // because we don't want the session to be deleted only the pointer
 }
 
@@ -16,7 +16,7 @@ virtual Agent::~Agent(){
 
 // copy assignment operatorSS
 const Agent& Agent::operator=(const Agent &other) {
-    session = other.session // is this currently?
+    session = other.session; // is this currently?
     return *this;
 }
 
@@ -25,7 +25,7 @@ const Agent& Agent::operator=(const Agent &other) {
 // move assignment operator
 
 // clone
-virtual Agent* Agent::clone(){
+Agent* Agent::clone(){
     Agent cloned = this;
     return *cloned; // is this right?
 }

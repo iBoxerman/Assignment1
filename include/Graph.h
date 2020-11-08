@@ -10,7 +10,7 @@ public:
     virtual ~Graph();
     Graph(const Graph &other);
 
-    const getSize() const;
+    const int getSize() const;
     bool areNeighbors(int i, int j);
     std::vector<int> allNeighbors(int i);
     void infectNode(int nodeInd);

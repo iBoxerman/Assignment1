@@ -9,7 +9,7 @@ public:
     Agent(Session& session);
     virtual ~Agent();
     Agent(const Agent &other);
-    const Agent& operator=(const Agent &other)
+    const Agent& operator=(const Agent &other);
 
     virtual Agent* clone()=0;
     virtual void act()=0;

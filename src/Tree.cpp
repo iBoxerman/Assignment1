@@ -68,17 +68,19 @@ void Tree::BFS( Session& session,int i) {
     std::vector<int> queue; // initializing a queue
     visited[i] = true; // visiting myself
     queue.push_back(i); // pushing myself into the queue
+
     while(!queue.empty()){
-        int curr = queue.front(); // pulling the first node on the queue
+        int currInd = queue.front(); // pulling the first node on the queue
         queue.erase(queue.begin()); // deleting the first node
-        for (int k : session.getGraph().allNeighbors(curr)){ // for each neighbor of curr
+        Tree currTree = Tree(currInd);
+        for (int k : session.getGraph().allNeighbors(currInd)){ // for each neighbor of curr
             if (!visited[k])
                 visited[k]=true;
                 queue.push_back(k);
-                this->addChild(Tree(k)); //??????????????????????????????????/
+                currTree.addChild(Tree(k));
 
             }
-        }
+
     }
 
 }
