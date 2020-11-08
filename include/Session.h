@@ -21,10 +21,11 @@ public:
     void simulate();
     void addAgent(const Agent& agent);
     void setGraph(const Graph& graph);
-    Graph getGraph();
+    Graph & getGraph();
+    int getGraphSize() const;
     void enqueueInfected(int);
     int dequeueInfected();
-    TreeType getTreeType();
+    TreeType getTreeType() const;
     
 private:
     Graph g;

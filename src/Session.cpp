@@ -51,9 +51,15 @@ void Session::setGraph(const Graph &graph) {
     g = graph;
 }
 
- Graph& Session::getGraph()  {
-    return &g;
+Graph& Session::getGraph() {
+    return g ;
 }
+
+
+int Session::getGraphSize() const {
+    return this->g.getSize();
+}
+
 
 void Session::enqueueInfected(int) {
 
@@ -64,13 +70,8 @@ int Session::dequeueInfected() {
 }
 
 // returns the TreeType Cycle/MaxRank/Root
-TreeType Session::getTreeType() {
+TreeType Session::getTreeType() const {
     return treeType;
 }
-
-
-
-
-
 
 

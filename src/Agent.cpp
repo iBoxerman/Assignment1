@@ -10,8 +10,8 @@ virtual Agent::~Agent(){
 }
 
 // copy constructor
-const Agent::Agent(const Agent &other) {
-    session = other.session; // it is not the exactly the definition of copy constructor but it will do the work
+ Agent::Agent(const Agent &other):session(other.session) {
+    // it is not the exactly the definition of copy constructor but it will do the work
 }
 
 // copy assignment operatorSS

@@ -5,12 +5,15 @@
 //#include <vector>
 
 // simple constructor
-Tree::Tree(int rootLabel):node(rootLabel),children() {
+Tree::Tree(int rootLabel):node(rootLabel),children(), visited() {
 }
 
 // destructor
 
 // copy constructor
+Tree::Tree(const Tree &other):node(other.node),children(other.children),visited(other.visited) {
+
+}
 
 // copy assignment operator
 
@@ -20,8 +23,9 @@ Tree::Tree(int rootLabel):node(rootLabel),children() {
 
 // this function add a child to the tree
 void Tree::addChild(const Tree &child) {
-    if (child!= nullptr){
-    }
+    //Tree other = *new Tree(child);
+    //children.push_back(&other);
+
 }
 
 const Tree& Tree::getChild(int) const {
@@ -30,9 +34,10 @@ const Tree& Tree::getChild(int) const {
 
 // used to make trees
 Tree *Tree::createTree(const Session &session, int rootLabel) {
+ /*   _session = session;
     Tree curr_tree = new Tree(rootLabel);
-    Graph graph = session.getGraph(); // copy assignment of graph
-
+    Graph graph = session; // copy assignment of graph
+*/
     if (session.getTreeType()==Cycle){
 
     }
@@ -54,19 +59,27 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
 
 }
 
-void Tree::BFS(const Session& session,int i) {
-    visited = new bool[session.g.getSize()] ; // initializing
-    for (bool element : visited){
-        element = false;
+void Tree::BFS( Session& session,int i) {
+    visited = new bool[session.getGraphSize()] ; // initializing
+    for (int j = 0; j<session.getGraphSize(); j++){
+        visited[j] = false;
     }
     std::vector<int> queue; // initializing a queue
-    visited[i] = true;
-    queue.push_back(i);
-    vector<int>::iterator iter;
+    visited[i] = true; // visiting myself
+    queue.push_back(i); // pushing myself into the queue
     while(!queue.empty()){
+        int curr = queue.front(); // pulling the first node on the queue
+        queue.erase(queue.begin()); // deleting the first node
+        for (int k : session.getGraph().allNeighbors(curr)){ // for each neighbor of curr
+            if (!visited[k])
+                visited[k]=true;
+                queue.push_back(k);
+                this->addChild(Tree(k)); //??????????????????????????????????/
 
+            }
+        }
     }
-    delete [visited];
+
 }
 
 // CycleTree simple constructor
@@ -92,3 +105,5 @@ RootTree::RootTree(int _rootLabel) : Tree(_rootLabel) {}
 int RootTree::traceTree() {
     return 0;
 }
+
+

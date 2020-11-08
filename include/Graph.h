@@ -12,10 +12,11 @@ public:
 
     const getSize() const;
     bool areNeighbors(int i, int j);
+    std::vector<int> allNeighbors(int i);
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
 private:
-    std::vector<vector<int>> edges;
+    std::vector< std::vector<int> > edges;
     std::vector<bool> infectedNodes;
 };
 

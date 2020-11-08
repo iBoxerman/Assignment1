@@ -8,16 +8,18 @@ class Session;
 class Tree{
 public:
     Tree(int rootLabel);
+    Tree(const Tree &other);
 
     void addChild(const Tree& child);
     const Tree& getChild(int) const;
     static Tree* createTree(const Session& session, int rootLabel);
-    virtual int traceTree()=0;
-    static BFS(const Session& session ,int i);
+   // virtual int traceTree()=0;
+    void BFS( Session& session ,int i); // maybe static?
 
 private:
     int node;
     std::vector<Tree*> children;
+    bool* visited;
 };
 
 class CycleTree: public Tree{
