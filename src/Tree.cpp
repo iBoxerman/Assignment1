@@ -2,7 +2,7 @@
 #include "../include/Session.h"
 #include "../include/Graph.h"
 #include <iostream>
-#include <vector>
+//#include <vector>
 
 // simple constructor
 Tree::Tree(int rootLabel):node(rootLabel),children() {
@@ -42,6 +42,9 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
                 children.push_back(Tree(i))
             }
         }
+        for (Tree* element:children){
+            createTree(Session)
+        }
     }
     else{
 
@@ -51,8 +54,19 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
 
 }
 
-void Tree::BFS() {
-    Tree* curr_tree = createTree(session, node);
+void Tree::BFS(const Session& session,int i) {
+    visited = new bool[session.g.getSize()] ; // initializing
+    for (bool element : visited){
+        element = false;
+    }
+    std::vector<int> queue; // initializing a queue
+    visited[i] = true;
+    queue.push_back(i);
+    vector<int>::iterator iter;
+    while(!queue.empty()){
+
+    }
+    delete [visited];
 }
 
 // CycleTree simple constructor

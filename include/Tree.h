@@ -13,7 +13,7 @@ public:
     const Tree& getChild(int) const;
     static Tree* createTree(const Session& session, int rootLabel);
     virtual int traceTree()=0;
-    void BFS();
+    static BFS(const Session& session ,int i);
 
 private:
     int node;

@@ -2,7 +2,7 @@
 #include <vector>
 
 // simple constructor
-Graph::Graph(std::vector<std::vector<int>> matrix):edges(matrix),infectedNodes(){
+Graph::Graph(std::vector<vector<int>> matrix):edges(matrix),infectedNodes(){
     // using copy constructor to make edges (not move)
     // initialize the infected nodes vector
     int vSize = edges.size();
@@ -20,6 +20,10 @@ virtual Graph::~Graph() {
 }
 
 // copy constructor
+Graph::Graph(const Graph &other){
+    edges = other.edges;
+    infectedNodes = other.infectedNodes;
+}
 
 // copy assignment operator
 

@@ -3,6 +3,7 @@
 #include <vector>
 #include "../include/Session.h"
 #include "../include/Agent.h"
+#include "../include/Graph.h"
 
 // empty test constructor
 Session::Session() : g(), treeType(), agents(){
@@ -30,7 +31,13 @@ Session::Session(const std::string &path) {
 
 // this function invoke the session
 void Session::simulate() {
-
+    bool ended = false;
+    while (!ended){
+        // ended = has no one to infect / all infected
+        // agents act by order
+        break;
+    }
+    // output to json
 }
 
 // this function adds an agent
