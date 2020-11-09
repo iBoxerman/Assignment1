@@ -13,13 +13,16 @@ public:
     void addChild(const Tree& child);
     const Tree& getChild(int) const;
     static Tree* createTree(const Session& session, int rootLabel);
+    Tree * firstSon();
    // virtual int traceTree()=0;
-    void BFS( Session& session ,int i); // maybe static?
+    static void BFS(const Session& session , int i); // maybe static?
+    const int treeSize();
+    const int depth();
 
 private:
     int node;
     std::vector<Tree*> children;
-    bool* visited;
+    static bool* visited;
 };
 
 class CycleTree: public Tree{

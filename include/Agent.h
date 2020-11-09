@@ -13,7 +13,7 @@ public:
     const Agent& operator=(const Agent &other);
     */
 
-    virtual Agent* clone()=0;
+    virtual Agent * clone()=0;
     virtual void act(Session& session)=0;
 };
 

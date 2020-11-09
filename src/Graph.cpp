@@ -13,9 +13,13 @@ Graph::Graph(std::vector< std::vector<int> > matrix):edges(matrix),infectedNodes
 
 // destructor
 Graph::~Graph() {
-    if (edges & infectedNodes){
-        delete [edges];
-        delete [infectedNodes];
+    if (!edges.empty()){
+        for(auto p : edges){
+            p.clear();
+        }
+    }
+    if(!infectedNodes.empty()){
+        infectedNodes.clear();
     }
 }
 

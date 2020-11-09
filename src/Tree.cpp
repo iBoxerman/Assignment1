@@ -2,7 +2,7 @@
 #include "../include/Session.h"
 #include "../include/Graph.h"
 #include <iostream>
-//#include <vector>
+#include <vector>
 
 // simple constructor
 Tree::Tree(int rootLabel):node(rootLabel),children(), visited() {
@@ -23,8 +23,8 @@ Tree::Tree(const Tree &other):node(other.node),children(other.children),visited(
 
 // this function add a child to the tree
 void Tree::addChild(const Tree &child) {
-    //Tree other = *new Tree(child);
-    //children.push_back(&other);
+    Tree* other = new Tree(child.node);
+    children.push_back(other);
 
 }
 
@@ -34,33 +34,25 @@ const Tree& Tree::getChild(int) const {
 
 // used to make trees
 Tree *Tree::createTree(const Session &session, int rootLabel) {
- /*   _session = session;
-    Tree curr_tree = new Tree(rootLabel);
-    Graph graph = session; // copy assignment of graph
-
-
+    Tree* tree;
     if (session.getTreeType()==Cycle){
-
+        tree = new CycleTree(rootLabel,session.currCycle);
     }
-    else if (session.getTreeType()==MaxRank){
-        for (int i = 0; i<graph.getSize(); i++){
-            if (graph.areNeighbors(rootLabel,i)){
-                children.push_back(Tree(i))
-            }
-        }
-        for (Tree* element:children){
-            createTree(Session)
-        }
+    else if (session.getTreeType()==MaxRank){ // checks my which son has maximum size;
+        tree = new MaxRankTree(rootLabel);
     }
     else{
-
+        tree = new RootTree(rootLabel);
     }
-
-    return nullptr;*/
-
+    return tree;
 }
 
-void Tree::BFS( Session& session,int i) {
+Tree *Tree::firstSon() {
+    if(!children.empty())
+    return children.front();
+}
+
+void Tree::BFS(const Session& session,int i) {
     visited = new bool[session.getGraphSize()] ; // initializing
     for (int j = 0; j<session.getGraphSize(); j++){
         visited[j] = false;
@@ -78,15 +70,42 @@ void Tree::BFS( Session& session,int i) {
                 visited[k]=true;
                 queue.push_back(k);
                 currTree.addChild(Tree(k));
-
             }
-
     }
+}
 
+// get the tree size, by recursive method
+const int Tree::treeSize() {
+    int x;
+    for (auto child:children){
+        if (child == nullptr)
+            x=+1;
+        else x=+child->treeSize();
+    }
+    return x;
+}
+
+// need correction!!!!!    wrong !!!
+const int Tree::depth() {
+    int maxRank;
+    int x=0;
+    for (auto child:children){
+        x=0;
+        if (child != nullptr)
+            x=x+1;
+        else{
+          if (x>maxRank){
+              maxRank=x;
+          }
+        }
+    }
+    return maxRank;
 }
 
 // CycleTree simple constructor
-CycleTree::CycleTree(int _rootLabel, int _currCycle) : Tree(_rootLabel),currCycle(_currCycle){}
+CycleTree::CycleTree(int _rootLabel, int _currCycle) : Tree(_rootLabel),currCycle(_currCycle){
+    return 0;
+}
 
 // this used by the ContactTracer
 int CycleTree::traceTree() {
@@ -94,7 +113,24 @@ int CycleTree::traceTree() {
 }
 
 // MaxRankTree simple constructor
-MaxRankTree::MaxRankTree(int _rootLabel) : Tree(_rootLabel) {}
+MaxRankTree::MaxRankTree(int _rootLabel) : Tree(_rootLabel) {
+   /*
+   int max=0;
+    Tree* maxTree;
+    for (Tree* child: children){
+        if (child.treeSize()>max){
+            maxTree = child;
+            max= child.treeSize();
+        } else if(child.treeSize()=max){
+            if (child->depth()> maxTree->depth()){
+                maxTree = child;
+            }
+        }
+    }
+    return maxTree;
+    */
+
+}
 
 // this used by the ContactTracer
 int MaxRankTree::traceTree() {

@@ -31,11 +31,13 @@ Session::Session(const std::string &path) {
 
 // this function invoke the session
 void Session::simulate() {
-    bool ended = false;
-    while (!ended){
-        // ended = has no one to infect / all infected
-        // agents act by order
-        break;
+    while (true){
+        int node = dequeueInfected();
+        if (node==-1) // the queue is empty - "Game Over"
+            break;
+        else{
+            // play
+        }
     }
     // output to json
 }
@@ -51,7 +53,7 @@ void Session::setGraph(const Graph &graph) {
     g = graph;
 }
 
-Graph& Session::getGraph() {
+Graph & Session::getGraph() const {
     return g ;
 }
 
@@ -61,17 +63,28 @@ int Session::getGraphSize() const {
 }
 
 
-void Session::enqueueInfected(int) {
-
+void Session::enqueueInfected(int i) {
+    queue.push_back(i);
 }
 
 int Session::dequeueInfected() {
-    return 0;
+    if (queue.empty()) {
+        return -1;
+    }
+    else {
+        return qPop();
+    }
+}
+int Session::qPop() {
+    int temp = queue.front();
+    queue.erase(queue.begin());
+    return temp;
 }
 
 // returns the TreeType Cycle/MaxRank/Root
 TreeType Session::getTreeType() const {
     return treeType;
 }
+
 
 
