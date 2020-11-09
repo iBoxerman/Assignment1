@@ -12,7 +12,7 @@ Graph::Graph(std::vector< std::vector<int> > matrix):edges(matrix),infectedNodes
 }
 
 // destructor
-virtual Graph::~Graph() {
+Graph::~Graph() {
     if (edges & infectedNodes){
         delete [edges];
         delete [infectedNodes];
@@ -62,5 +62,3 @@ void Graph::infectNode(int nodeInd) {
 bool Graph::isInfected(int nodeInd) {
     return infectedNodes.at(nodeInd);
 }
-
-
