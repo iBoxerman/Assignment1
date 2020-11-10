@@ -10,9 +10,10 @@ public:
     Tree(int rootLabel);
     Tree(const Tree &other);
 
-    virtual Tree * clone()=0;
+    virtual Tree * clone() const = 0;
     virtual int traceTree()=0;
-    void addChild(const Tree& child);
+    void addChild(const Tree& child); // shit function
+    void addChild(const Tree* child);
     const Tree& getChild(int) const;
     static Tree* createTree(const Session& session, int rootLabel);
     Tree * firstSon();
@@ -32,7 +33,7 @@ class CycleTree: public Tree{
 public:
     CycleTree(int rootLabel, int currCycle);
 
-    virtual Tree * clone();
+    virtual Tree * clone() const;
     virtual int traceTree();
 private:
     int currCycle;
@@ -42,7 +43,7 @@ class MaxRankTree: public Tree{
 public:
     MaxRankTree(int rootLabel);
 
-    virtual Tree * clone();
+    virtual Tree * clone() const;
     virtual int traceTree();
 };
 
@@ -50,7 +51,7 @@ class RootTree: public Tree{
 public:
     RootTree(int rootLabel);
 
-    virtual Tree * clone();
+    virtual Tree * clone() const;
     virtual int traceTree();
 };
 
