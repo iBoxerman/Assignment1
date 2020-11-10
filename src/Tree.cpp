@@ -44,6 +44,7 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
     else{
         tree = new RootTree(rootLabel);
     }
+    BFS(session,rootLabel);
     return tree;
 }
 
@@ -104,7 +105,7 @@ const int Tree::depth() {
 
 // CycleTree simple constructor
 CycleTree::CycleTree(int _rootLabel, int _currCycle) : Tree(_rootLabel),currCycle(_currCycle){
-    return 0;
+
 }
 
 // this used by the ContactTracer
