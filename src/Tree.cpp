@@ -26,7 +26,6 @@ const Tree &Tree::operator=(const Tree &other) {
         for(Tree* child : other.children){
             addChild(child);
         }
-
     }
     return *this; // returning a ptr is the main concept of operator=
 }
