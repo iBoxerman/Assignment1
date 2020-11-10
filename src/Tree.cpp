@@ -5,13 +5,13 @@
 #include <vector>
 
 // simple constructor
-Tree::Tree(int rootLabel):node(rootLabel),children(), visited() {
+Tree::Tree(int rootLabel):node(rootLabel),children() {
 }
 
 // destructor
 
 // copy constructor
-Tree::Tree(const Tree &other):node(other.node),children(other.children),visited(other.visited) {
+Tree::Tree(const Tree &other):node(other.node),children(other.children) {
 
 }
 
@@ -23,7 +23,7 @@ Tree::Tree(const Tree &other):node(other.node),children(other.children),visited(
 
 // this function add a child to the tree
 void Tree::addChild(const Tree &child) {
-    Tree* other = new Tree(child.node);
+    Tree* other = child.clone();
     children.push_back(other);
 
 }
@@ -44,7 +44,6 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
     else{
         tree = new RootTree(rootLabel);
     }
-    BFS(session,rootLabel);
     return tree;
 }
 
@@ -53,38 +52,39 @@ Tree *Tree::firstSon() {
     return children.front();
 }
 
-void Tree::BFS(const Session& session,int i) {
+void Tree::BFS(const Session& session,int myNode) {
     visited = new bool[session.getGraphSize()] ; // initializing
     for (int j = 0; j<session.getGraphSize(); j++){
         visited[j] = false;
     }
     std::vector<int> queue; // initializing a queue
-    visited[i] = true; // visiting myself
-    queue.push_back(i); // pushing myself into the queue
+    visited[myNode] = true; // visiting myself
+    queue.push_back(myNode); // pushing myself into the queue
+    Tree* currTree = createTree(session,myNode);
 
     while(!queue.empty()){
         int currInd = queue.front(); // pulling the first node on the queue
         queue.erase(queue.begin()); // deleting the first node
-        Tree currTree = Tree(currInd);
         for (int k : session.getGraph().allNeighbors(currInd)){ // for each neighbor of curr
             if (!visited[k])
                 visited[k]=true;
                 queue.push_back(k);
-                currTree.addChild(Tree(k));
+                Tree* newChild = createTree(session,k);
+                currTree->addChild(*newChild);
+                currTree=newChild;
             }
     }
 }
 
-// get the tree size, by recursive method
-const int Tree::treeSize() {
-    int x;
-    for (auto child:children){
-        if (child == nullptr)
-            x=+1;
-        else x=+child->treeSize();
-    }
-    return x;
+// get the tree size, by recursive method // needed the biggest children size
+const int Tree::childrenSize() {
+    return children.size();
 }
+
+const std::vector<Tree *> Tree::getChildren() {
+    return children;
+}
+
 
 // need correction!!!!!    wrong !!!
 const int Tree::depth() {
@@ -103,47 +103,66 @@ const int Tree::depth() {
     return maxRank;
 }
 
+const int Tree::getRoot() const {
+    return node;
+}
+
 // CycleTree simple constructor
 CycleTree::CycleTree(int _rootLabel, int _currCycle) : Tree(_rootLabel),currCycle(_currCycle){
 
 }
 
+Tree *CycleTree::clone(){
+    Tree* cloned = new CycleTree(getRoot(),currCycle);
+    return cloned;
+}
+
 // this used by the ContactTracer
 int CycleTree::traceTree() {
-    return 0;
+    int counter = currCycle;
+    Tree* currTree = this->firstSon();
+    while (currTree != nullptr & counter>0){
+        currTree = currTree->firstSon();
+        counter--;
+    }
+    return currTree->getRoot();
 }
 
 // MaxRankTree simple constructor
 MaxRankTree::MaxRankTree(int _rootLabel) : Tree(_rootLabel) {
-   /*
-   int max=0;
-    Tree* maxTree;
-    for (Tree* child: children){
-        if (child.treeSize()>max){
-            maxTree = child;
-            max= child.treeSize();
-        } else if(child.treeSize()=max){
-            if (child->depth()> maxTree->depth()){
-                maxTree = child;
-            }
-        }
-    }
-    return maxTree;
-    */
 
+
+}
+
+
+Tree *MaxRankTree::clone() {
+    Tree* cloned = new MaxRankTree(getRoot());
+    return cloned;
 }
 
 // this used by the ContactTracer
 int MaxRankTree::traceTree() {
-    return 0;
+    int max= childrenSize();
+    Tree* maxTree;
+    for (Tree* child: getChildren()){
+        if (child->childrenSize()>max){
+            max = child->childrenSize();
+
+        }
+    }
+
 }
 
 // RootTree simple constructor
 RootTree::RootTree(int _rootLabel) : Tree(_rootLabel) {}
 
+Tree *RootTree::clone() {
+    Tree* cloned = new RootTree(getRoot());
+    return cloned;
+}
+
 // this used by the ContactTracer
 int RootTree::traceTree() {
     return 0;
 }
-
 

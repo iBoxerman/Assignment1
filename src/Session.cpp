@@ -32,6 +32,7 @@ Session::Session(const std::string &path) {
 // this function invoke the session
 void Session::simulate() {
     while (true){
+        currCycle++;
         int node = dequeueInfected();
         if (node==-1) // the queue is empty - "Game Over"
             break;

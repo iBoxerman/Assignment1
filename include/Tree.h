@@ -10,14 +10,17 @@ public:
     Tree(int rootLabel);
     Tree(const Tree &other);
 
+    virtual Tree * clone()=0;
+    virtual int traceTree()=0;
     void addChild(const Tree& child);
     const Tree& getChild(int) const;
     static Tree* createTree(const Session& session, int rootLabel);
     Tree * firstSon();
-   // virtual int traceTree()=0;
     static void BFS(const Session& session , int i); // maybe static?
-    const int treeSize();
+    const int childrenSize();
+    const std::vector<Tree*> getChildren();
     const int depth();
+    const int getRoot() const;
 
 private:
     int node;
@@ -29,6 +32,7 @@ class CycleTree: public Tree{
 public:
     CycleTree(int rootLabel, int currCycle);
 
+    virtual Tree * clone();
     virtual int traceTree();
 private:
     int currCycle;
@@ -38,6 +42,7 @@ class MaxRankTree: public Tree{
 public:
     MaxRankTree(int rootLabel);
 
+    virtual Tree * clone();
     virtual int traceTree();
 };
 
@@ -45,6 +50,7 @@ class RootTree: public Tree{
 public:
     RootTree(int rootLabel);
 
+    virtual Tree * clone();
     virtual int traceTree();
 };
 
