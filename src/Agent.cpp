@@ -1,5 +1,5 @@
 #include "../include/Agent.h"
-#include "../include/Session.h"
+#include "../include/Tree.h"
 
 /*
 // simple constructor
@@ -44,7 +44,7 @@ void Virus::act( Session& session) {
 }
 
 // Virus clone
-Agent *Virus::clone() {
+Agent *Virus::clone() const{
     Virus* cloned = new Virus(*this); // can be auto (recommended by Clion)
     return cloned;
 }
@@ -54,12 +54,19 @@ ContactTracer::ContactTracer() {}
 
 // ContactTracer act
 void ContactTracer::act(Session& session) {
-    // make a tree
-    // remove edges according to tree type
+    Graph newGraph = session.getGraph();
+    int node = session.dequeueInfected();
+    if (node!= -1){
+        Tree* tree = Tree::createTree(session,node);
+        tree->BFS(session,node);
+        int nodeToCut = tree->traceTree();
+        newGraph.removeEdges(nodeToCut);
+        session.setGraph(newGraph);
+    }
 }
 
 // ContactTracer clone
-Agent *ContactTracer::clone() {
+Agent *ContactTracer::clone() const{
     ContactTracer* cloned = new ContactTracer(*this); // can be auto (recommended by Clion)
     return cloned;
 }

@@ -41,7 +41,7 @@ const int Graph::getSize() const {
 }
 
 bool Graph::areNeighbors(int i, int j) {
-    return (edges.at(i).at(j)==1);
+    return (edges.at(i).at(j)==1 | edges.at(j).at(i)==1) ;
 }
 
 std::vector<int> Graph::allNeighbors(int i) {
@@ -59,10 +59,16 @@ void Graph::infectNode(int nodeInd) {
     if (!isInfected(nodeInd)){
         infectedNodes.at(nodeInd)=true;
     }
-    // push at session?
 }
 
 // this function checks if the given node is infected
 bool Graph::isInfected(int nodeInd) {
     return infectedNodes.at(nodeInd);
+}
+
+void Graph::removeEdges(int i) {
+    for (int j : allNeighbors(i)){
+        edges.at(i).at(j) = 0;
+        edges.at(j).at(i) = 0;
+    }
 }

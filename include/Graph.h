@@ -15,6 +15,8 @@ public:
     std::vector<int> allNeighbors(int i);
     void infectNode(int nodeInd);
     bool isInfected(int nodeInd);
+    void removeEdges(int i);
+
 private:
     std::vector< std::vector<int> > edges;
     std::vector<bool> infectedNodes;

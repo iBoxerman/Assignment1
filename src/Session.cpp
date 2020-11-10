@@ -31,13 +31,14 @@ Session::Session(const std::string &path) {
 
 // this function invoke the session
 void Session::simulate() {
-    while (true){
+    bool ended = false;
+    while (!ended){
         currCycle++;
-        int node = dequeueInfected();
-        if (node==-1) // the queue is empty - "Game Over"
-            break;
-        else{
-            // play
+        for(auto agent : agents){
+            agent->act(*this);
+        }
+        if (queue.empty()){
+            ended=true;
         }
     }
     // output to json
@@ -54,10 +55,9 @@ void Session::setGraph(const Graph &graph) {
     g = graph;
 }
 
-Graph & Session::getGraph() const {
+Graph & Session::getGraph(){
     return g ;
 }
-
 
 int Session::getGraphSize() const {
     return this->g.getSize();

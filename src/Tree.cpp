@@ -1,7 +1,5 @@
 #include "../include/Tree.h"
 #include "../include/Session.h"
-#include "../include/Graph.h"
-#include <iostream>
 #include <vector>
 
 // simple constructor
@@ -9,14 +7,29 @@ Tree::Tree(int rootLabel):node(rootLabel),children() {
 }
 
 // destructor
+Tree::~Tree() {
+    clear();
+}
 
 // copy constructor
 Tree::Tree(const Tree &other):node(other.node),children(other.children) {
-
+    for(Tree* child : other.children){ // deep copy because we want the children to be copied
+        addChild(child);
+    }
 }
 
 // copy assignment operator
+const Tree &Tree::operator=(const Tree &other) {
+    if(this!=&other){ // for the case x=x
+        clear(); // like delete
+        node=other.node;
+        for(Tree* child : other.children){
+            addChild(child);
+        }
 
+    }
+    return *this; // returning a ptr is the main concept of operator=
+}
 // move constructor
 
 // move assignment operator
@@ -32,8 +45,13 @@ void Tree::addChild(const Tree *child) {
 }
 
 
-const Tree& Tree::getChild(int) const {
-
+const Tree& Tree::getChild(int i) const {
+    for(Tree* child :children){
+        if(child->getRoot()==i){
+            return *child;
+        }
+    }
+    return *(this->clone()); // Error!! just for exiting the function!
 }
 
 // used to make trees
@@ -58,7 +76,7 @@ Tree *Tree::firstSon() {
     else return nullptr;
 }
 
-void Tree::BFS(const Session& session,int myNode) {
+void Tree::BFS( Session& session,int myNode) {
     visited = new bool[session.getGraphSize()] ; // initializing
     for (int j = 0; j<session.getGraphSize(); j++){
         visited[j] = false;
@@ -66,7 +84,7 @@ void Tree::BFS(const Session& session,int myNode) {
     std::vector<int> queue; // initializing a queue
     visited[myNode] = true; // visiting myself
     queue.push_back(myNode); // pushing myself into the queue
-    Tree* currTree = createTree(session,myNode);
+    Tree* currTree = createTree(session,myNode); // making a *new* tree!!
 
     while(!queue.empty()){
         int currInd = queue.front(); // pulling the first node on the queue
@@ -75,7 +93,7 @@ void Tree::BFS(const Session& session,int myNode) {
             if (!visited[k])
                 visited[k]=true;
                 queue.push_back(k);
-                Tree* newChild = createTree(session,k);
+                Tree* newChild = createTree(session,k); // making a *new* tree!!
                 currTree->addChild(*newChild);
                 currTree=newChild;
             }
@@ -145,7 +163,7 @@ Tree *MaxRankTree::clone() const {
 }
 
 // this used by the ContactTracer
-int MaxRankTree::traceTree() {
+int MaxRankTree::traceTree() {    // !!!!!!!!!!!!!!!!!!!!! not completed !!!!!!!!!!!!!!!!!
     Tree* maxTree;
     Tree* currTree = this;
     for (Tree* child: currTree->getChildren()){
@@ -170,4 +188,14 @@ Tree *RootTree::clone() const {
 int RootTree::traceTree() {
     return getRoot();
 }
+
+
+void Tree::clear() {
+    for (auto child: children){
+        if (child!= nullptr){
+            delete [] child;
+        }
+    }
+}
+
 

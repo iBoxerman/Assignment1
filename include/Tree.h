@@ -7,8 +7,13 @@ class Session;
 
 class Tree{
 public:
-    Tree(int rootLabel);
-    Tree(const Tree &other);
+    Tree(int rootLabel); // simple constructor
+    virtual ~Tree();// destructor
+    Tree(const Tree &other); // copy constructor
+    const Tree& operator=(const Tree &other);// copy assignment operator
+    // move constructor
+    // move assignment operator
+
 
     virtual Tree * clone() const = 0;
     virtual int traceTree()=0;
@@ -17,11 +22,12 @@ public:
     const Tree& getChild(int) const;
     static Tree* createTree(const Session& session, int rootLabel);
     Tree * firstSon();
-    static void BFS(const Session& session , int i); // maybe static?
+    static void BFS( Session& session , int i); // maybe static?
     const int childrenSize();
     const std::vector<Tree*> getChildren();
     const int depth();
     const int getRoot() const;
+    void clear();
 
 private:
     int node;

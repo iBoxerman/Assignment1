@@ -13,7 +13,7 @@ public:
     const Agent& operator=(const Agent &other);
     */
 
-    virtual Agent * clone()=0;
+    virtual Agent * clone() const =0;
     virtual void act(Session& session)=0;
 };
 
@@ -22,7 +22,7 @@ public:
     Virus(int nodeInd);
 
     virtual void act(Session& session);
-    virtual Agent * clone();
+    virtual Agent * clone() const;
 private:
     const int nodeInd;
 };
@@ -32,7 +32,7 @@ public:
     ContactTracer();
 
     virtual void act(Session& session);
-    virtual Agent * clone();
+    virtual Agent * clone() const;
 };
 
 #endif
