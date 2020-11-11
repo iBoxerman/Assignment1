@@ -1,10 +1,11 @@
 #include "../include/Tree.h"
 #include "../include/Session.h"
 #include <vector>
+#include <algorithm>
 
 /* notes for this class:
  * move endless loop
- * if sort then BFS
+ * sort in BFS
 */
 
 // simple constructor
@@ -126,7 +127,7 @@ void Tree::BFS( Session& session,int myNode) {
                 queue.push_back(k);
                 Tree* newChild = createTree(session,k); // making a *new* tree!!
                 currTree->addChild(*newChild);
-                // need to sort !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+                std::sort(currTree->children.begin(),currTree->children.end(),compareByNode); // sorting the children by their nodes (using operator<)
                 currTree=newChild;
             }
     }
@@ -171,22 +172,8 @@ void Tree::clear() {
     node = -1; // making sure that no one will do something to the node
 }
 
-// sorting the children !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! need to be done
-void Tree::sort() {
-    if (!children.empty()){
-        int pos = 0;
-        int size = childrenSize();
-        for(int i=1; i<size; i++){
-            if (children[pos]>children[i]){
-                Tree* temp = children[i];
-                children[i] = children[pos];
-                children[pos] = temp;
-                delete temp;
-
-            }
-        }
-    }
-
+bool Tree::compareByNode(const Tree &i, const Tree &j) {
+    return (i.node<j.node); // smallest comes first
 }
 
 // a getter for the root
@@ -249,9 +236,3 @@ Tree *RootTree::clone() const {
 int RootTree::traceTree() {
     return getRoot();
 }
-
-
-
-
-
-

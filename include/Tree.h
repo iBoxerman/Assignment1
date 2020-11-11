@@ -28,7 +28,7 @@ public:
     const int depth();
     const int getRoot() const;
     void clear();
-    void sort();
+    static bool compareByNode(const Tree& i, const Tree& j) ;
 
 private:
     int node;
