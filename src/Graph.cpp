@@ -2,12 +2,12 @@
 #include <vector>
 
 // simple constructor
-Graph::Graph(std::vector< std::vector<int> > matrix):edges(matrix),infectedNodes(){
+Graph::Graph(std::vector< std::vector<int> > matrix):edges(matrix),infectedNodes(std::vector<bool>()){
     // using copy constructor to make edges (not move)
     // initialize the infected nodes vector
     int vSize = edges.size();
     for(int i=0; i<vSize;i++){
-        infectedNodes.at(i)=false;
+        infectedNodes.push_back(false);
     }
 }
 
@@ -72,3 +72,5 @@ void Graph::removeEdges(int i) {
         edges.at(j).at(i) = 0;
     }
 }
+
+

@@ -15,8 +15,12 @@ enum TreeType{
 
 class Session{
 public:
-    Session();
-    Session(const std::string& path);
+    Session(const std::string& path); // simple constructor
+    virtual ~Session();// destructor
+    Session(const Session &other); // copy constructor
+    Session(Session &&other); // move constructor
+    const Session& operator=(const Session &other);// copy assignment operator
+    Session& operator=(Session &&other); // move assignment operator
     
     void simulate();
     void addAgent(const Agent& agent);
@@ -28,7 +32,8 @@ public:
     int qPop();
     TreeType getTreeType() const;
     int currCycle;
-    
+    void clear();
+
 private:
     Graph g;
     TreeType treeType;
