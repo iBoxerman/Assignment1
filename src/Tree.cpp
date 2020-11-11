@@ -2,6 +2,11 @@
 #include "../include/Session.h"
 #include <vector>
 
+/* notes for this class:
+ * move endless loop
+ * if sort then BFS
+*/
+
 // simple constructor
 Tree::Tree(int rootLabel):node(rootLabel),children() {
 }
@@ -12,9 +17,24 @@ Tree::~Tree() {
 }
 
 // copy constructor
-Tree::Tree(const Tree &other):node(other.node),children(other.children) {
+Tree::Tree(const Tree &other):node(other.node),children(other.children) { // need to think if other.children.size() is needed
     for(Tree* child : other.children){ // deep copy because we want the children to be copied
-        addChild(child);
+        addChild(child); // addChild uses clone() which makes a copy of the child
+    }
+}
+
+// move constructor
+Tree::Tree(Tree &&other){ // not initializing fields here for convenient and clear method
+    if(this!=&other){ // for the case x=x
+        clear();
+        node=other.node;
+        visited = other.visited;
+        children = other.children;
+        const int size = other.childrenSize(); // just for const size because other.children is a vector
+        for (int i =0 ; i<size; i++) {
+            children.push_back(other.children.at(i)); // taking the pointer to my children
+            other.children.at(i) = nullptr; // deleting the pointer from the other tree
+        }
     }
 }
 
@@ -29,21 +49,33 @@ const Tree &Tree::operator=(const Tree &other) {
     }
     return *this; // returning a ptr is the main concept of operator=
 }
-// move constructor
 
 // move assignment operator
+Tree &Tree::operator=(Tree &&other) {
+    if(this!=&other){ // for the case x=x
+        clear();
+        node=other.node;
+        children = other.children;
+        int size = other.childrenSize();
+        for(int i =0 ; i<size; i++){
+            children.push_back(other.children.at(i));// taking the pointer to my children
+            other.children.at(i) = nullptr; // deleting the pointer from the other tree
+        }
+    }
+    return *this; // returning a ptr is the main concept of operator=return <#initializer#>;
+}
 
-// this function add a child to the tree - not used. using by pointer.
+// adds a child to the tree - not used, using by pointer.
 void Tree::addChild(const Tree &child) {
 }
 
-// using this method
+// adds a child to the tree - used
 void Tree::addChild(const Tree *child) {
     Tree* other = child->clone();
     children.push_back(other);
 }
 
-
+// returns the child with a specific node
 const Tree& Tree::getChild(int i) const {
     for(Tree* child :children){
         if(child->getRoot()==i){
@@ -53,7 +85,7 @@ const Tree& Tree::getChild(int i) const {
     return *(this->clone()); // Error!! just for exiting the function!
 }
 
-// used to make trees
+// returns a ptr to a new tree that was made according to session's tree type
 Tree *Tree::createTree(const Session &session, int rootLabel) {
     Tree* tree;
     if (session.getTreeType()==Cycle){
@@ -68,7 +100,7 @@ Tree *Tree::createTree(const Session &session, int rootLabel) {
     return tree;
 }
 
-// a getter for the first child (the left-most son!)
+// a getter for the first child (left-most son!)
 Tree *Tree::firstSon() {
     if(!children.empty())
         return children.front();
@@ -94,6 +126,7 @@ void Tree::BFS( Session& session,int myNode) {
                 queue.push_back(k);
                 Tree* newChild = createTree(session,k); // making a *new* tree!!
                 currTree->addChild(*newChild);
+                // need to sort !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
                 currTree=newChild;
             }
     }
@@ -125,6 +158,35 @@ const int Tree::depth() {
         }
     }
     return maxRank;
+}
+
+// clear and delete all fields
+void Tree::clear() {
+    for (auto child: children){
+        if (child!= nullptr){
+            delete [] child;
+        }
+    }
+    delete [] visited;
+    node = -1; // making sure that no one will do something to the node
+}
+
+// sorting the children !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! need to be done
+void Tree::sort() {
+    if (!children.empty()){
+        int pos = 0;
+        int size = childrenSize();
+        for(int i=1; i<size; i++){
+            if (children[pos]>children[i]){
+                Tree* temp = children[i];
+                children[i] = children[pos];
+                children[pos] = temp;
+                delete temp;
+
+            }
+        }
+    }
+
 }
 
 // a getter for the root
@@ -189,12 +251,7 @@ int RootTree::traceTree() {
 }
 
 
-void Tree::clear() {
-    for (auto child: children){
-        if (child!= nullptr){
-            delete [] child;
-        }
-    }
-}
+
+
 
 

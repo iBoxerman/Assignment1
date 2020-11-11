@@ -10,9 +10,9 @@ public:
     Tree(int rootLabel); // simple constructor
     virtual ~Tree();// destructor
     Tree(const Tree &other); // copy constructor
+    Tree(Tree &&other); // move constructor
     const Tree& operator=(const Tree &other);// copy assignment operator
-    // move constructor
-    // move assignment operator
+    Tree& operator=(Tree &&other); // move assignment operator
 
 
     virtual Tree * clone() const = 0;
@@ -28,6 +28,7 @@ public:
     const int depth();
     const int getRoot() const;
     void clear();
+    void sort();
 
 private:
     int node;
